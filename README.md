@@ -31,6 +31,7 @@ Makebsp is a high-performance idTech 3 BSP compiler modernization based on the o
 
 ### 1. High-Performance Ray Tracing (Intel Embree)
 The legacy BSP-traversal ray caster has been replaced with the industry-standard **Intel Embree 4.4.0** BVH builder and intersection kernels.
+- **Selective Shadowing:** Alpha-tested surfaces (foliage, grates) now cast accurate, per-pixel shadows via a custom `AlphaFilter` integration.
 - **Unified Data Cache:** To maximize performance, the toolchain pre-calculates and caches the world-space origin and normal of every lightmap texel and volumetric voxel. This cached geometry is shared across all lighting stages (Direct, Radiosity, and Ambient), eliminating redundant coordinate reconstruction.
 - **Intelligent Light Culling:** The tool uses an advanced culling system that calculates a light's physical "reach" based on energy intensity and a configurable `cutoff` threshold. This allows the ray tracer to ignore surfaces outside a light's influence radius with zero overhead.
 - **Performance Gain:** The combination of Intel's highly optimized BVH kernels and our internal geometric caching results in a 10x performance gain during the ray tracing phase compared to traditional tools.
@@ -140,7 +141,7 @@ List of additions and modifications made to shader parsing and features compared
 
 ## 📦 Entity Keys Reference
 
-> **Note on Underscore Prefixes:** This compiler ignores single underscore prefixes (`_`) on entity keys. For example, using `_color` is treated exactly the same as `color`, and `_shading` is treated the same as `shading`.
+> **Note on Underscore Prefixes:** This compiler ignores single underscore prefixes (`_`) on entity keys. For example, using `_color` is treated exactly the same as `color`, and `_shading` is treated the same as `shading`. This allows mappers to use standard Quake 3 convention keys interchangeably with our new parameters.
 
 ### Entity: worldspawn
 
@@ -148,7 +149,7 @@ List of additions and modifications made to shader parsing and features compared
 - **ambient**: Global uniform ambient light intensity. Default 0.
 - **color**: Sets the color for both ambient_sky and ambient_ground if not present. Default 1 1 1.
 - **ambient_sky**: The RGB color vector for the sky ambient light. Used for surfaces facing upwards.
-- **ambient_ground**: The RGB color vector for the ground ambient light (R G B). Used for surfaces facing downwards.
+- **ambient_ground**: The RGB color vector for the ground ambient light. Used for surfaces facing downwards.
 - **shading**: Global light shading mode. Valid modes are: halflambert, lambert, quadratic, doublequadratic, unreal. Default lambert.
 - **attenuation**: Global default distance falloff model for lights. Valid modes are: standard, soft, linear, unreal, smoothstep.
 - **exposurefilter**: Global tonemapping exposure filter. Valid modes are: softknee, reinhard, filmic, linear (or off). Default reinhard.
@@ -177,7 +178,7 @@ List of additions and modifications made to shader parsing and features compared
 
 **Geometry & BSP**
 - **blocksize**: Global size of BSP map splitting blocks (e.g., 1024).
-- **enforcesamplesize**: Forces q3map to subdivide geometry more strictly to match the requested lightmap sample size. Integer boolean (1 or 0). Default 1.
+- **enforcesamplesize**: Forces q3map to subdivide brushes to match the requested lightmap sample size. Integer boolean (1 or 0). Default 1.
 
 ### Entity: misc_model
 
@@ -199,12 +200,6 @@ List of additions and modifications made to shader parsing and features compared
 
 ### Entity: func_group
 
-**Terrain**
-- **terrain**: If set to "1", converts the brushes in this group into a blended terrain surface using an alphamap.
-- **shader**: Specifies the base shader to use for terrain generation (required if terrain is "1").
-- **alphamap**: Path to the image file used to blend terrain layers (required if terrain is "1").
-- **layers**: Number of terrain layers to blend from the alphamap (required if terrain is "1").
-
 **Brushes**
 - **smooth**: lightmap smooth filter radius to use on this group's surfaces.
 - **vertexcolor**: Overrides the vertex color for all surfaces of this group.
@@ -212,13 +207,19 @@ List of additions and modifications made to shader parsing and features compared
 - **supersample**: Supersampling radius override for the group's lightmaps.
 - **enforcesamplesize**: Subividide the surfaces if they can't match the samplesize. Integer boolean (1 or 0).
 
+**Terrain** *(This is the original untouched q3map feature.)*
+- **terrain**: If set to "1", converts the brushes in this group into a blended terrain surface using an alphamap.
+- **shader**: Specifies the base shader to use for terrain generation (required if terrain is "1").
+- **alphamap**: Path to the image file used to blend terrain layers (required if terrain is "1").
+- **layers**: Number of terrain layers to blend from the alphamap (required if terrain is "1").
+
 ### Entity: func_light
 
 **Light set up**
 - **type**: Can be "point" (alias:"pointlight"), "spot" (alias:"spotlight" or default), or "surface" (alias:"surfacelight"). Determines whether to generate point lights, spotlights, or emissive surfaces from the brushes.
 - **nudge**: Distance to nudge the generated light entities away from the brush surfaces. Defaults to 1.0 for spotlights (ignored for surface lights).
 - **light**: The emission strength or intensity of the light.
-- **color**: The color of the light (R G B). If not specified, it will attempt to derive it from the surface texture (lightimage).
+- **color**: The color of the light. If not specified, it will attempt to derive it from the surface texture (lightimage).
 - **backsplash**: Backsplash percentage for surface lights and spotlights (how much light bounces back). Default: surface 0.0/spot 0.1.
 - **attenuation**: Distance falloff model. Valid modes are: standard, soft, linear, unreal, smoothstep.
 - **cutoff**: Minimum energy threshold before the light is completely culled. Defaults to the global game.json minLightAdd value.
