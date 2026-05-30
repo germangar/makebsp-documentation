@@ -140,6 +140,8 @@ List of additions and modifications made to shader parsing and features compared
 
 ## 📦 Entity Keys Reference
 
+> **Note on Underscore Prefixes:** This compiler ignores single underscore prefixes (`_`) on entity keys. For example, using `_color` is treated exactly the same as `color`, and `_shading` is treated the same as `shading`.
+
 ### Entity: worldspawn
 
 **Lighting / Global Ambiance**
