@@ -18,6 +18,11 @@ Makebsp is a high-performance idTech 3 BSP compiler modernization based on the o
 - [🛠 Recommended Workflow](#-recommended-workflow)
 - [🎨 Shader Modifications](#-shader-modifications)
 - [📦 Entity Keys Reference](#-entity-keys-reference)
+    - [worldspawn](#entity-worldspawn)
+    - [misc_model](#entity-misc_model)
+    - [func_group](#entity-func_group)
+    - [func_light](#entity-func_light)
+    - [light](#entity-light)
 - [💻 CLI Command Reference](#-cli-command-reference)
 
 ---
