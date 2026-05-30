@@ -139,124 +139,124 @@ List of additions and modifications made to shader parsing and features compared
 ### Entity: worldspawn
 
 **Lighting / Global Ambiance**
-- `ambient`: Global uniform ambient light intensity. Default 0.
-- `color`: Sets the color for both ambient_sky and ambient_ground if not present. Default 1 1 1.
-- `ambient_sky`: The RGB color vector for the sky ambient light (R G B). Used for surfaces facing upwards.
-- `ambient_ground`: The RGB color vector for the ground ambient light (R G B). Used for surfaces facing downwards.
-- `shading`: Global light shading mode. Valid modes are: halflambert, lambert, quadratic, doublequadratic, unreal. Default lambert.
-- `attenuation`: Global default distance falloff model for lights. Valid modes are: standard, soft, linear, unreal, smoothstep.
-- `exposurefilter`: Global tonemapping exposure filter. Valid modes are: softknee, reinhard, filmic, linear (or off). Default reinhard.
-- `cutoff`: Minimum energy threshold before any light is completely culled. Defaults to the global game.json minLightAdd value.
-- `fadeout`: Percentage of a light's reach to use for a softness fade (0.0 to 1.0). Defaults to 0.0 (hard cut).
-- `backsplashspot`: Default entity spotlight backsplash fraction (0.0 to 1.0).
-- `backsplashsurface`: Default surface light backsplash fraction (0.0 to 1.0).
-- `_lightingIntensity`: [qfusion engine key] Custom fixed normalization scale for 8-bit LDR lightmap output.Defaults to 3.0
+- **ambient**: Global uniform ambient light intensity. Default 0.
+- **color**: Sets the color for both ambient_sky and ambient_ground if not present. Default 1 1 1.
+- **ambient_sky**: The RGB color vector for the sky ambient light (R G B). Used for surfaces facing upwards.
+- **ambient_ground**: The RGB color vector for the ground ambient light (R G B). Used for surfaces facing downwards.
+- **shading**: Global light shading mode. Valid modes are: halflambert, lambert, quadratic, doublequadratic, unreal. Default lambert.
+- **attenuation**: Global default distance falloff model for lights. Valid modes are: standard, soft, linear, unreal, smoothstep.
+- **exposurefilter**: Global tonemapping exposure filter. Valid modes are: softknee, reinhard, filmic, linear (or off). Default reinhard.
+- **cutoff**: Minimum energy threshold before any light is completely culled. Defaults to the global game.json minLightAdd value.
+- **fadeout**: Percentage of a light's reach to use for a softness fade (0.0 to 1.0). Defaults to 0.0 (hard cut).
+- **backsplashspot**: Default entity spotlight backsplash fraction (0.0 to 1.0).
+- **backsplashsurface**: Default surface light backsplash fraction (0.0 to 1.0).
+- **_lightingIntensity**: [qfusion engine key] Custom fixed normalization scale for 8-bit LDR lightmap output.Defaults to 3.0
 
 **Lightmaps & Rendering Passes**
-- `samplesize`: Global default lightmap sample size in game units (e.g., 16). Default depends on game profile (4 or 8).
-- `deluxe`: Enable (1) or disable (0) deluxe mapping globally (direction maps). Default depends on game profile (1 or 0).
-- `deluxe_minangle`: Minimum angle (in degrees) to blend deluxemaps (0 to 90). Higher value = softer bumpmapping. Default depends on game profile (15.0 or 40.0).
-- `supersample`: Global supersampling trace radius (e.g., 0.5 or 2.0). Defaults to 0 (disabled). Exceeding 8.0 is not recommended.
-- `smooth`: Global lightmap smooth filter radius. Defaults to 0.35. Set to 0.0 to disable global smoothing.
-- `smoothpasses`: Number of smoothing passes applied to the lightmaps. Defaults to 4.
-- `antialiasing`: Number of global antialiasing passes. Defaults to 0 (disabled)
+- **samplesize**: Global default lightmap sample size in game units (e.g., 16). Default depends on game profile (4 or 8).
+- **deluxe**: Enable (1) or disable (0) deluxe mapping globally (direction maps). Default depends on game profile (1 or 0).
+- **deluxe_minangle**: Minimum angle (in degrees) to blend deluxemaps (0 to 90). Higher value = softer bumpmapping. Default depends on game profile (15.0 or 40.0).
+- **supersample**: Global supersampling trace radius (e.g., 0.5 or 2.0). Defaults to 0 (disabled). Exceeding 8.0 is not recommended.
+- **smooth**: Global lightmap smooth filter radius. Defaults to 0.35. Set to 0.0 to disable global smoothing.
+- **smoothpasses**: Number of smoothing passes applied to the lightmaps. Defaults to 4.
+- **antialiasing**: Number of global antialiasing passes. Defaults to 0 (disabled)
 
 **Radiosity (Bounce Light)**
-- `radiosity`: Global radiosity (bounced light) intensity. Defaults to 1.0. Set to 0 to disable radiosity.
-- `rad_color_ratio`: Radiosity color transfer (how much the texture color tints the bounce light). Default 1.0. When using ambient lighting reducing 'rad_color_ratio' transfers the ambient sky color into the radiosity light.
-- `rad_interval`: Radiosity surface voxelization interval/grid size. Default 4. Must be a factor of 2. The bigger the faster the radiosity passes, but it impacts the intensity.
-- `rad_ao_intensity`: Ambient Occlusion intensity multiplier (0.0 to 1.0) applied during the first radiosity pass. The bigger, the darker the occlusion shadows. Default 0.5.
-- `rad_ao_min`: Minimum ambient occlusion fade distance. Default 0 world units. The ambient occlusion will fade from rad_ao_intensity at rad_ao_min to 0.0 at rad_ao_max.
-- `rad_ao_max`: Maximum ambient occlusion fade distance. Default 24 world units.
+- **radiosity**: Global radiosity (bounced light) intensity. Defaults to 1.0. Set to 0 to disable radiosity.
+- **rad_color_ratio**: Radiosity color transfer (how much the texture color tints the bounce light). Default 1.0. When using ambient lighting reducing 'rad_color_ratio' transfers the ambient sky color into the radiosity light.
+- **rad_interval**: Radiosity surface voxelization interval/grid size. Default 4. Must be a factor of 2. The bigger the faster the radiosity passes, but it impacts the intensity.
+- **rad_ao_intensity**: Ambient Occlusion intensity multiplier (0.0 to 1.0) applied during the first radiosity pass. The bigger, the darker the occlusion shadows. Default 0.5.
+- **rad_ao_min**: Minimum ambient occlusion fade distance. Default 0 world units. The ambient occlusion will fade from rad_ao_intensity at rad_ao_min to 0.0 at rad_ao_max.
+- **rad_ao_max**: Maximum ambient occlusion fade distance. Default 24 world units.
 
 **Geometry & BSP**
-- `blocksize`: Global size of BSP map splitting blocks (e.g., 1024).
-- `enforcesamplesize`: Forces q3map to subdivide geometry more strictly to match the requested lightmap sample size. Integer boolean (1 or 0). Default 1.
+- **blocksize**: Global size of BSP map splitting blocks (e.g., 1024).
+- **enforcesamplesize**: Forces q3map to subdivide geometry more strictly to match the requested lightmap sample size. Integer boolean (1 or 0). Default 1.
 
 ### Entity: misc_model
 
 **Editor keys**
-- `model`: The path to the 3D model file to load.
-- `origin`: The base translation/position of the model in the world (X Y Z).
-- `angles`: The rotation of the model (Pitch Yaw Roll).
-- `modelscale`: A uniform scaling factor applied to all axes (defaults to 1.0).
-- `modelscale_vec`: A non-uniform scaling vector (X Y Z). If set to 0 0 0, it falls back to modelscale.
+- **model**: The path to the 3D model file to load.
+- **origin**: The base translation/position of the model in the world (X Y Z).
+- **angles**: The rotation of the model (Pitch Yaw Roll).
+- **modelscale**: A uniform scaling factor applied to all axes (defaults to 1.0).
+- **modelscale_vec**: A non-uniform scaling vector (X Y Z). If set to 0 0 0, it falls back to modelscale.
 
 **User keys**
-- `smooth`: lightmap smooth filter radius to use on this model.
-- `vertexcolor`: Overrides the vertex color for all surfaces of this model instance (R G B).
-- `upscale`: Enable or disable raytracing at 2x lightmap resolution.
-- `supersample`: Supersampling radius override for the model's lightmaps.
-- `lightmapscale`: Entity-level scaling factor for lightmap resolution on the model (clamped between 0.01 and 16.0).
-- `forceuvgen`: Enable (default) or disable to force generating new lightmap UVs from scratch. Disabled uses the model UVs.
-- `collisiontype`: Overrides how the model's collision mesh is generated. Valid working values are: object, wrap, extrude (buggy), none (alias nosolid / nonsolid).
+- **smooth**: lightmap smooth filter radius to use on this model.
+- **vertexcolor**: Overrides the vertex color for all surfaces of this model instance (R G B).
+- **upscale**: Enable or disable raytracing at 2x lightmap resolution.
+- **supersample**: Supersampling radius override for the model's lightmaps.
+- **lightmapscale**: Entity-level scaling factor for lightmap resolution on the model (clamped between 0.01 and 16.0).
+- **forceuvgen**: Enable (default) or disable to force generating new lightmap UVs from scratch. Disabled uses the model UVs.
+- **collisiontype**: Overrides how the model's collision mesh is generated. Valid working values are: object, wrap, extrude (buggy), none (alias nosolid / nonsolid).
 
 ### Entity: func_group
 
 **Terrain**
-- `terrain`: If set to "1", converts the brushes in this group into a blended terrain surface using an alphamap.
-- `shader`: Specifies the base shader to use for terrain generation (required if terrain is "1").
-- `alphamap`: Path to the image file used to blend terrain layers (required if terrain is "1").
-- `layers`: Number of terrain layers to blend from the alphamap (required if terrain is "1").
+- **terrain**: If set to "1", converts the brushes in this group into a blended terrain surface using an alphamap.
+- **shader**: Specifies the base shader to use for terrain generation (required if terrain is "1").
+- **alphamap**: Path to the image file used to blend terrain layers (required if terrain is "1").
+- **layers**: Number of terrain layers to blend from the alphamap (required if terrain is "1").
 
 **Brushes**
-- `smooth`: lightmap smooth filter radius to use on this group's surfaces.
-- `vertexcolor`: Overrides the vertex color for all surfaces of this group (R G B).
-- `upscale`: Enable or disable raytracing at 2x lightmap resolution.
-- `supersample`: Supersampling radius override for the group's lightmaps.
-- `enforcesamplesize`: Subividide the surfaces if they can't match the samplesize. Integer boolean (1 or 0).
+- **smooth**: lightmap smooth filter radius to use on this group's surfaces.
+- **vertexcolor**: Overrides the vertex color for all surfaces of this group (R G B).
+- **upscale**: Enable or disable raytracing at 2x lightmap resolution.
+- **supersample**: Supersampling radius override for the group's lightmaps.
+- **enforcesamplesize**: Subividide the surfaces if they can't match the samplesize. Integer boolean (1 or 0).
 
 ### Entity: func_light
 
 **Light set up**
-- `type`: Can be "point" (alias:"pointlight"), "spot" (alias:"spotlight" or default), or "surface" (alias:"surfacelight"). Determines whether to generate point lights, spotlights, or emissive surfaces from the brushes.
-- `nudge`: Distance to nudge the generated light entities away from the brush surfaces. Defaults to 1.0 for spotlights (ignored for surface lights).
-- `light`: The emission strength or intensity of the light.
-- `color`: The color of the light (R G B). If not specified, it will attempt to derive it from the surface texture (lightimage).
-- `backsplash`: Backsplash percentage for surface lights and spotlights (how much light bounces back). Default: surface 0.0/spot 0.1.
-- `attenuation`: Distance falloff model. Valid modes are: standard, soft, linear, unreal, smoothstep.
-- `cutoff`: Minimum energy threshold before the light is completely culled. Defaults to the global game.json minLightAdd value.
-- `fadeout`: Percentage of the light's reach to use for a softness fade (0.0 to 1.0). Defaults to 0.0 (hard cut).
+- **type**: Can be "point" (alias:"pointlight"), "spot" (alias:"spotlight" or default), or "surface" (alias:"surfacelight"). Determines whether to generate point lights, spotlights, or emissive surfaces from the brushes.
+- **nudge**: Distance to nudge the generated light entities away from the brush surfaces. Defaults to 1.0 for spotlights (ignored for surface lights).
+- **light**: The emission strength or intensity of the light.
+- **color**: The color of the light (R G B). If not specified, it will attempt to derive it from the surface texture (lightimage).
+- **backsplash**: Backsplash percentage for surface lights and spotlights (how much light bounces back). Default: surface 0.0/spot 0.1.
+- **attenuation**: Distance falloff model. Valid modes are: standard, soft, linear, unreal, smoothstep.
+- **cutoff**: Minimum energy threshold before the light is completely culled. Defaults to the global game.json minLightAdd value.
+- **fadeout**: Percentage of the light's reach to use for a softness fade (0.0 to 1.0). Defaults to 0.0 (hard cut).
 
 **Surfacelights**
-- `subdivide`: Controls how finely surface lights are subdivided.
+- **subdivide**: Controls how finely surface lights are subdivided.
 
 **Spotlights**
-- `radius`: Radius of the spotlight cone at the target distance (defaults to 64).
-- `softness`: Spotlight cone softness multiplier (defaults to 1.0).
-- `target`: Target entity name to aim the spotlight at.
-- `dir`: Explicit direction vector (X Y Z) for the spotlight.
-- `angles`: Rotation angles (Pitch Yaw Roll) for the spotlight.
-- `haloshader`: Specific shader to use for the volumetric halo. Set to "none" or "0" to disable the halo for this light.
-- `haloscale`: Scales the size of the generated halo surface. Defaults to 1.0.
+- **radius**: Radius of the spotlight cone at the target distance (defaults to 64).
+- **softness**: Spotlight cone softness multiplier (defaults to 1.0).
+- **target**: Target entity name to aim the spotlight at.
+- **dir**: Explicit direction vector (X Y Z) for the spotlight.
+- **angles**: Rotation angles (Pitch Yaw Roll) for the spotlight.
+- **haloshader**: Specific shader to use for the volumetric halo. Set to "none" or "0" to disable the halo for this light.
+- **haloscale**: Scales the size of the generated halo surface. Defaults to 1.0.
 
 **Brushes**
-- `smooth`: Lightmap smooth filter radius to use on this entity's surfaces.
-- `vertexcolor`: Overrides the vertex color for all surfaces of this group (R G B).
-- `upscale`:  Enable or disable raytracing at 2x lightmap resolution.
-- `supersample`: Supersampling radius override for the entity's lightmaps.
-- `enforcesamplesize`: Subdivide the surfaces if they can't match the samplesize. Integer boolean (1 or 0).
+- **smooth**: Lightmap smooth filter radius to use on this entity's surfaces.
+- **vertexcolor**: Overrides the vertex color for all surfaces of this group (R G B).
+- **upscale**:  Enable or disable raytracing at 2x lightmap resolution.
+- **supersample**: Supersampling radius override for the entity's lightmaps.
+- **enforcesamplesize**: Subdivide the surfaces if they can't match the samplesize. Integer boolean (1 or 0).
 
 ### Entity: light
 
 **Light set up**
-- `light`: The emission strength or intensity of the light.
-- `color`: The color of the light (R G B).
-- `attenuation`: Distance falloff model. Valid modes are: standard, soft, linear, unreal, smoothstep.
-- `cutoff`: Minimum energy threshold before the light is completely culled. Defaults to the global game minLightAdd value (0.1).
-- `fadeout`: Percentage of the light's reach to use for a softness fade (0.0 to 1.0). Defaults to 0.0 (hard cut).
-- `haloshader`: Specific shader to use for the volumetric halo. Set to "none" or "0" to disable the halo for this light.
-- `style`: [currently broken] Light style index for dynamic lighting (e.g. flickering, pulsing).
-- `lightimage`: If color is not specified, uses the average color of this shader.
+- **light**: The emission strength or intensity of the light.
+- **color**: The color of the light (R G B).
+- **attenuation**: Distance falloff model. Valid modes are: standard, soft, linear, unreal, smoothstep.
+- **cutoff**: Minimum energy threshold before the light is completely culled. Defaults to the global game minLightAdd value (0.1).
+- **fadeout**: Percentage of the light's reach to use for a softness fade (0.0 to 1.0). Defaults to 0.0 (hard cut).
+- **haloshader**: Specific shader to use for the volumetric halo. Set to "none" or "0" to disable the halo for this light.
+- **style**: [currently broken] Light style index for dynamic lighting (e.g. flickering, pulsing).
+- **lightimage**: If color is not specified, uses the average color of this shader.
 
 **Spotlights**
-- `radius`: Radius of the spotlight cone at the target distance.
-- `softness`: Spotlight cone softness multiplier (defaults to 1.0).
-- `backsplash`: Backsplash percentage (how much light bounces back). Default 0.1.
-- `target`: Target entity name to aim the spotlight at.
-- `dir`: Explicit direction vector (X Y Z) for the spotlight (when not using a target).
-- `angles`: Rotation angles (Pitch Yaw Roll) for the spotlight (when not using a target).
-- `haloscale`: Scales the size of the generated halo surface. Defaults to 1.0.
+- **radius**: Radius of the spotlight cone at the target distance.
+- **softness**: Spotlight cone softness multiplier (defaults to 1.0).
+- **backsplash**: Backsplash percentage (how much light bounces back). Default 0.1.
+- **target**: Target entity name to aim the spotlight at.
+- **dir**: Explicit direction vector (X Y Z) for the spotlight (when not using a target).
+- **angles**: Rotation angles (Pitch Yaw Roll) for the spotlight (when not using a target).
+- **haloscale**: Scales the size of the generated halo surface. Defaults to 1.0.
 
 ---
 
