@@ -147,7 +147,7 @@ List of additions and modifications made to shader parsing and features compared
 **Lighting / Global Ambiance**
 - **ambient**: Global uniform ambient light intensity. Default 0.
 - **color**: Sets the color for both ambient_sky and ambient_ground if not present. Default 1 1 1.
-- **ambient_sky**: The RGB color vector for the sky ambient light (R G B). Used for surfaces facing upwards.
+- **ambient_sky**: The RGB color vector for the sky ambient light. Used for surfaces facing upwards.
 - **ambient_ground**: The RGB color vector for the ground ambient light (R G B). Used for surfaces facing downwards.
 - **shading**: Global light shading mode. Valid modes are: halflambert, lambert, quadratic, doublequadratic, unreal. Default lambert.
 - **attenuation**: Global default distance falloff model for lights. Valid modes are: standard, soft, linear, unreal, smoothstep.
@@ -190,7 +190,7 @@ List of additions and modifications made to shader parsing and features compared
 
 **User keys**
 - **smooth**: lightmap smooth filter radius to use on this model.
-- **vertexcolor**: Overrides the vertex color for all surfaces of this model instance (R G B).
+- **vertexcolor**: Overrides the vertex color for all surfaces of this model instance.
 - **upscale**: Enable or disable raytracing at 2x lightmap resolution.
 - **supersample**: Supersampling radius override for the model's lightmaps.
 - **lightmapscale**: Entity-level scaling factor for lightmap resolution on the model (clamped between 0.01 and 16.0).
@@ -207,7 +207,7 @@ List of additions and modifications made to shader parsing and features compared
 
 **Brushes**
 - **smooth**: lightmap smooth filter radius to use on this group's surfaces.
-- **vertexcolor**: Overrides the vertex color for all surfaces of this group (R G B).
+- **vertexcolor**: Overrides the vertex color for all surfaces of this group.
 - **upscale**: Enable or disable raytracing at 2x lightmap resolution.
 - **supersample**: Supersampling radius override for the group's lightmaps.
 - **enforcesamplesize**: Subividide the surfaces if they can't match the samplesize. Integer boolean (1 or 0).
@@ -238,7 +238,7 @@ List of additions and modifications made to shader parsing and features compared
 
 **Brushes**
 - **smooth**: Lightmap smooth filter radius to use on this entity's surfaces.
-- **vertexcolor**: Overrides the vertex color for all surfaces of this group (R G B).
+- **vertexcolor**: Overrides the vertex color for all surfaces of this group.
 - **upscale**:  Enable or disable raytracing at 2x lightmap resolution.
 - **supersample**: Supersampling radius override for the entity's lightmaps.
 - **enforcesamplesize**: Subdivide the surfaces if they can't match the samplesize. Integer boolean (1 or 0).
@@ -247,7 +247,7 @@ List of additions and modifications made to shader parsing and features compared
 
 **Light set up**
 - **light**: The emission strength or intensity of the light.
-- **color**: The color of the light (R G B).
+- **color**: The color of the light.
 - **attenuation**: Distance falloff model. Valid modes are: standard, soft, linear, unreal, smoothstep.
 - **cutoff**: Minimum energy threshold before the light is completely culled. Defaults to the global game minLightAdd value (0.1).
 - **fadeout**: Percentage of the light's reach to use for a softness fade (0.0 to 1.0). Defaults to 0.0 (hard cut).
