@@ -1,0 +1,5 @@
+Extract the contents of the makebsp directory into the Netradiant directory. The 'makebsp' and 'makelight' executables should be in the main directory side by side with all the other compilers distributed with Netradiant.
+
+Follow the instructions in the screenshots to add the builds to the Build menu.
+
+![Alt text](https://github.com/germangar/makebsp-documentation/edit/main/Install_in_Netradiant)
