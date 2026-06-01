@@ -282,7 +282,7 @@ Makebsp is the primary tool for BSP compilation, visibility calculation, and uti
 **BSP Compilation (Default Mode)**
 Used to compile a `.map` file into a `.bsp` file.
 *New or relevant to makebsp:*
-- `-game <G>`: Load a specific game profile (e.g., quake3, qfusion) from `games/<G>.json`.
+- `-game <G>`: Load a specific game profile (e.g., quake3, qfusion) from `makebsp/<G>.json`.
 - `-samplesize <N>`: Sets the default lightmap sample size (e.g., 4, 8, 16). Lower values = higher resolution.
 - `-enforceSampleSize <0|1>`: If enabled (1), strictly follows the sample size defined in shaders or globally, forcing subdivision if necessary.
 - `-guessuvs`: Automatically calculates optimal UV packing resolution for triangle soup (models) before repacking.
