@@ -1,6 +1,6 @@
 # Makebsp
 
-Makebsp is a high-performance idTech 3 BSP compiler modernization based on the original id Software `q3map` source code. This toolchain is designed for cinema-grade lighting, high-precision ray tracing, and deep integration of 3D models as first-class world geometry.
+Makebsp is a high-performance idTech 3 BSP compiler modernization based on the original id Software `makebsp` source code. This toolchain is designed for cinema-grade lighting, high-precision ray tracing, and deep integration of 3D models as first-class world geometry.
 
 ## Table of Contents
 - [💡 Key Features](#-key-features)
@@ -96,7 +96,7 @@ Externalized game-specific configurations into customizable JSON profiles.
 To achieve the best results and maintain organized projects, it is recommended to follow the configuration hierarchy of the toolchain:
 
 ### 1. Game Profile (Global Defaults)
-The JSON files in the `games/` directory should define the **baseline standards** for your project. This includes engine-specific limits and the general "look" of the lighting that should apply to all maps in that game. 
+The JSON files in the `makebsp/` directory should define the **baseline standards** for your project. This includes engine-specific limits and the general "look" of the lighting that should apply to all maps in that game. 
 
 ### 2. Worldspawn (Map-Specific Setup)
 The **Worldspawn entity** should be used to define map-specific lighting and surface treatments. Any key set in the Worldspawn (e.g., `samplesize`, `ambient`, `shading`, `radiosity`,  `deluxe`) will override the defaults in the game profile. This allows each map to have its own unique atmospheric character without changing the compiler's global configuration.
@@ -112,15 +112,15 @@ By following this hierarchy, your map source files (`.map`) remain portable and 
 
 ## 🎨 Shader Modifications
 
-List of additions and modifications made to shader parsing and features compared to the original q3map.
+List of additions and modifications made to shader parsing and features compared to the original makebsp.
 
 ### New Shader Directives
-- **q3map_vertexcolor <R G B>**: Overrides the vertex color for the surface.
-- **q3map_surfacelight_glow <value>**: Sets the backface glow fraction for surface lights (enabled by default in CONTENTS_LAVA and CONTENTS_SLIME).
-- **q3map_lightColor <R G B>**: Alias for `q3map_lightRGB`. Sets the light emission color for the surface.
+- **makebsp_vertexcolor <R G B>**: Overrides the vertex color for the surface.
+- **makebsp_surfacelight_glow <value>**: Sets the backface glow fraction for surface lights (enabled by default in CONTENTS_LAVA and CONTENTS_SLIME).
+- **makebsp_lightColor <R G B>**: Alias for `makebsp_lightRGB`. Sets the light emission color for the surface.
 
 ### Color Handling
-- **Global Application:** The new color processing pipeline applies globally. It works for shader commands (e.g., `q3map_lightRGB`, `q3map_lightColor`, `q3map_vertexcolor`) as well as entity keys (e.g., `color`, `_color`).
+- **Global Application:** The new color processing pipeline applies globally. It works for shader commands (e.g., `makebsp_lightRGB`, `makebsp_lightColor`, `makebsp_vertexcolor`) as well as entity keys (e.g., `color`, `_color`).
 - **Format Autodetection:** The compiler automatically detects and parses colors provided in three formats:
   - Standard floating-point RGB (0.0 to 1.0)
   - Integer RGB (0 to 255)
@@ -128,10 +128,10 @@ List of additions and modifications made to shader parsing and features compared
 - **No Color Normalization:** The compiler no longer automatically normalizes color vectors. The color values you specify are used exactly as intended, preserving the original brightness and artistic intent rather than artificially brightening the light emission.
 
 ### General Changes
-- **Default Backsplash:** The default light backsplash for surface lights is now disabled (0.0) unless explicitly requested by the game profile, via the `q3map_backsplash` directive or the entity key 'backsplash'. Backsplash is enabled by default for spotlights.
+- **Default Backsplash:** The default light backsplash for surface lights is now disabled (0.0) unless explicitly requested by the game profile, via the `makebsp_backsplash` directive or the entity key 'backsplash'. Backsplash is enabled by default for spotlights.
 
 ### Stage / Pass Directives
-- **material <image>**: Scanned inside rendering passes. This QFusion-specific keyword is recognized and its image will be used as a fallback to derive average surface colors and light colors if `qer_editorimage` or `q3map_lightimage` are not specified.
+- **material <image>**: Scanned inside rendering passes. This QFusion-specific keyword is recognized and its image will be used as a fallback to derive average surface colors and light colors if `qer_editorimage` or `makebsp_lightimage` are not specified.
 
 ### Surface Parameters (`surfaceparm <parameter>`)
 - **nosolid**: Acts as an alias for `nonsolid`. Clears the solid flag from the surface.
@@ -178,7 +178,7 @@ List of additions and modifications made to shader parsing and features compared
 
 **Geometry & BSP**
 - **blocksize**: Global size of BSP map splitting blocks (e.g., 1024).
-- **enforcesamplesize**: Forces q3map to subdivide brushes to match the requested lightmap sample size. Integer boolean (1 or 0). Default 1.
+- **enforcesamplesize**: Forces makebsp to subdivide brushes to match the requested lightmap sample size. Integer boolean (1 or 0). Default 1.
 
 ### Entity: misc_model
 
@@ -207,7 +207,7 @@ List of additions and modifications made to shader parsing and features compared
 - **supersample**: Supersampling radius override for the group's lightmaps.
 - **enforcesamplesize**: Subividide the surfaces if they can't match the samplesize. Integer boolean (1 or 0).
 
-**Terrain** *(This is the original untouched q3map feature.)*
+**Terrain** *(This is the original untouched makebsp feature.)*
 - **terrain**: If set to "1", converts the brushes in this group into a blended terrain surface using an alphamap.
 - **shader**: Specifies the base shader to use for terrain generation (required if terrain is "1").
 - **alphamap**: Path to the image file used to blend terrain layers (required if terrain is "1").
@@ -283,7 +283,7 @@ Used to compile a `.map` file into a `.bsp` file.
 - `-userdir / -fs_homepath <P>`: Set the user/home directory path (where the compiled BSP will be written). Can be specified multiple times.
 - `-gamedir / -fs_game <P>`: Set the active mod/game directory name. Can be specified multiple times.
 
-*From q3map:*
+*From makebsp:*
 - `-onlyents`: Only update the entities lump in an existing BSP file.
 - `-onlytextures`: Only update the texture info in an existing BSP file.
 - `-micro <V>`: Set the threshold volume for "microbrushes" to be ignored (default is very small).
@@ -310,7 +310,7 @@ These switches change the primary mode of the executable.
 
 ---
 
-### Light CLI
+### Makelight CLI
 
 **Radiosity**
 - `-rad_passes <N>`: Number of radiosity (light bounce) iterations.
