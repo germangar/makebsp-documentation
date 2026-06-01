@@ -59,7 +59,7 @@ Mappers can now tint and recolor materials directly within the map editor withou
 ### 6. Automatic Light Halos
 Spotlights and directed light sources can now automatically generate volumetric "halos" (billboards) to simulate atmospheric scattering.
 - **Dynamic Sizing:** Halo dimensions are automatically calculated based on the light's intensity and radius, ensuring the visual effect matches the physical light cone.
-- **Shader Control:** Mappers can override the default halo effect using the `haloshader` key or disable it entirely for specific lights.
+- **Shader Control:** Mappers can override the default halo effect using the `haloshader` key or disable it entirely for specific lights. The halo size can also be controlled with the `haloscale` key.
 - **Vertex Color Integration:** Halos inherit their color from the light source.
 
 ### 7. Modernized Color & Lighting Models
