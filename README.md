@@ -290,7 +290,7 @@ Used to compile a `.map` file into a `.bsp` file.
 - `-userdir / -fs_homepath <P>`: Set the user/home directory path (where the compiled BSP will be written). Can be specified multiple times.
 - `-gamedir / -fs_game <P>`: Set the active mod/game directory name. Can be specified multiple times.
 
-*From makebsp:*
+*From q3map:*
 - `-onlyents`: Only update the entities lump in an existing BSP file.
 - `-onlytextures`: Only update the texture info in an existing BSP file.
 - `-micro <V>`: Set the threshold volume for "microbrushes" to be ignored (default is very small).
