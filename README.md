@@ -187,13 +187,6 @@ List of additions and modifications made to shader parsing and features compared
 
 ### Entity: misc_model
 
-**Editor keys**
-- **model**: The path to the 3D model file to load.
-- **origin**: The base translation/position of the model in the world (X Y Z).
-- **angles**: The rotation of the model (Pitch Yaw Roll).
-- **modelscale**: A uniform scaling factor applied to all axes (defaults to 1.0).
-- **modelscale_vec**: A non-uniform scaling vector (X Y Z). If set to 0 0 0, it falls back to modelscale.
-
 **User keys**
 - **smooth**: lightmap smooth filter radius to use on this model.
 - **vertexcolor**: Overrides the vertex color for all surfaces of this model instance.
@@ -202,6 +195,13 @@ List of additions and modifications made to shader parsing and features compared
 - **lightmapscale**: Entity-level scaling factor for lightmap resolution on the model (clamped between 0.01 and 16.0).
 - **forceuvgen**: Enable (default) or disable to force generating new lightmap UVs from scratch. Disabled uses the model UVs.
 - **collisiontype**: Overrides how the model's collision mesh is generated. Valid working values are: object, wrap, extrude (buggy), none (alias nosolid / nonsolid).
+
+**Editor keys**
+- **model**: The path to the 3D model file to load.
+- **origin**: The base translation/position of the model in the world (X Y Z).
+- **angles**: The rotation of the model (Pitch Yaw Roll).
+- **modelscale**: A uniform scaling factor applied to all axes (defaults to 1.0).
+- **modelscale_vec**: A non-uniform scaling vector (X Y Z). If set to 0 0 0, it falls back to modelscale.
 
 ### Entity: func_group
 
