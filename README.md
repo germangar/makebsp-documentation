@@ -229,6 +229,7 @@ List of additions and modifications made to shader parsing and features compared
 - **attenuation**: Distance falloff model. Valid modes are: standard, soft, linear, unreal, smoothstep.
 - **cutoff**: Minimum energy threshold before the light is completely culled. Defaults to the global game.json minLightAdd value.
 - **fadeout**: Percentage of the light's reach to use for a softness fade at the cutoff (0.0 to 1.0). Defaults to 0.0 (hard cut).
+- **prestep**: (Aliases: `rampoffset`, `extradist`). Distance offset applied to the core of the light to prevent infinite brightness at the origin. Defaults to 16.0. (Ignored for surface lights).
 
 **Surfacelights**
 - **subdivide**: Controls how finely surface lights are subdivided.
@@ -257,6 +258,7 @@ List of additions and modifications made to shader parsing and features compared
 - **attenuation**: Distance falloff model. Valid modes are: standard, soft, linear, unreal, smoothstep.
 - **cutoff**: Minimum energy threshold before the light is completely culled. Defaults to the global game minLightAdd value (0.1).
 - **fadeout**: Percentage of the light's reach to use for a softness fade (0.0 to 1.0). Defaults to 0.0 (hard cut).
+- **prestep**: (Aliases: `rampoffset`, `extradist`). Distance offset applied to the core of the light to prevent infinite brightness at the origin. Defaults to 16.0.
 - **style**: [currently broken] Light style index for dynamic lighting (e.g. flickering, pulsing).
 - **lightimage**: If color is not specified, uses the average color of this shader.
 
@@ -297,17 +299,18 @@ Used to compile a `.map` file into a `.bsp` file.
 - `-nowater`: Skip processing of water surfaces.
 - `-nofill`: Skip the outside-filling stage (can be used for "leaky" maps during development).
 - `-nofog`: Skip processing of fog volumes.
+- `-novis`: Skip inline visibility calculation.
 - `-nosubdivide`: Disable subdivision of large surfaces.
 - `-nocurves`: Ignore all curved surfaces (patches).
 - `-notjunc`: Skip T-junction narrowing and fixing.
+- `-saveprt`: Do not delete the .prt file after processing.
 - `-leaktest`: Abort immediately if a leak is found.
 - `-v`: Enable verbose output.
 - `-threads <N>`: Manually set the number of worker threads.
 
 **Other Main Switches**
 These switches change the primary mode of the executable.
-- `-vis`: Enables Visibility calculation mode.
-  - `-fast`: Performs a simplified, faster visibility check.
+- `-visonly`: Enables Visibility calculation mode (requires .prt file).
   - `-merge`: Merges adjacent visibility data (can reduce file size).
   - `-nopassage`: Disables the passage-flow visibility optimization.
 - `-exportmodels <bspname>`: Exports all `misc_model` (Triangle Soup) geometry from a BSP into `.obj` files. Models processed with -meta/forcemeta will be split in multple mini-meshes and unusable. Only useful for models originally compiled for vertex lighting.
