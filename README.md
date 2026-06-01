@@ -40,11 +40,11 @@ The legacy BSP-traversal ray caster has been replaced with the industry-standard
 - **Internal Buffers:** All lighting data (luxels, light grid) is accumulated in float32 buffers to prevent rounding artifacts and light clipping.
 - **Dynamic Normalization:** Final 8-bit output conversion is deferred allowing for superior tonemapping and highlight compression.
 
-### 3. First-Class Model Support (misc_model)
+### 3. Improved Model Support (misc_model)
 `misc_model` entities are no longer second class citizens. They are fully integrated into the world geometry.
-- **Automatic Collision (HACD):** Every model placed into the map is solid by default. Optimized convex collision hulls are automatically generated using the **HACD (Hierarchical Approximate Convex Decomposition)** algorithm.
 - **Omnidirectional Lightmapping:** Triangle soups receive high-quality, seamless lightmaps. The UV-to-world rasterizer preserves the integrity of the mesh regardless of its topology.
-- **Lightmapped by Default:** Unless explicitly disabled in the shader, all models are solid and lightmapped just like world brushes.
+- **Automatic Collision (HACD):** Every model placed into the map is solid by default. Optimized convex collision hulls are automatically generated using the **HACD (Hierarchical Approximate Convex Decomposition)** algorithm.
+- **Solid and Lightmapped by Default:** Unless explicitly disabled in the shader, all models are solid and lightmapped just like world brushes.
 
 ### 4. Brush-to-Light Generation (func_light)
 The `func_light` entity allows mappers to create complex light setups directly from brush geometry without any shader scripting.
