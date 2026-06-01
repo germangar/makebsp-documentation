@@ -120,12 +120,12 @@ It is **highly recommended not to configure lighting directly inside your sky sh
 List of additions and modifications made to shader parsing and features compared to the original makebsp.
 
 ### New Shader Directives
-- **makebsp_vertexcolor <R G B>**: Overrides the vertex color for the surface.
-- **makebsp_surfacelight_glow <value>**: Sets the backface glow fraction for surface lights (enabled by default in CONTENTS_LAVA and CONTENTS_SLIME).
-- **makebsp_lightColor <R G B>**: Alias for `makebsp_lightRGB`. Sets the light emission color for the surface.
+- **q3map_vertexcolor <R G B>**: Overrides the vertex color for the surface.
+- **q3map_surfacelight_glow <value>**: Sets the backface glow fraction for surface lights (enabled by default in CONTENTS_LAVA and CONTENTS_SLIME).
+- **q3map_lightColor <R G B>**: Alias for `q3map_lightRGB`. Sets the light emission color for the surface.
 
 ### Color Handling
-- **Global Application:** The new color processing pipeline applies globally. It works for shader commands (e.g., `makebsp_lightRGB`, `makebsp_lightColor`, `makebsp_vertexcolor`) as well as entity keys (e.g., `color`, `_color`).
+- **Global Application:** The new color processing pipeline applies globally. It works for shader commands (e.g., `q3map_lightRGB`, `q3map_lightColor`, `q3map_vertexcolor`) as well as entity keys (e.g., `color`, `_color`).
 - **Format Autodetection:** The compiler automatically detects and parses colors provided in three formats:
   - Standard floating-point RGB (0.0 to 1.0)
   - Integer RGB (0 to 255)
@@ -133,10 +133,10 @@ List of additions and modifications made to shader parsing and features compared
 - **No Color Normalization:** The compiler no longer automatically normalizes color vectors. The color values you specify are used exactly as intended, preserving the original brightness and artistic intent rather than artificially brightening the light emission.
 
 ### General Changes
-- **Default Backsplash:** The default light backsplash for surface lights is now disabled (0.0) unless explicitly requested by the game profile, via the `makebsp_backsplash` directive or the entity key 'backsplash'. Backsplash is enabled by default for spotlights.
+- **Default Backsplash:** The default light backsplash for surface lights is now disabled (0.0) unless explicitly requested by the game profile, via the `q3map_backsplash` directive or the entity key 'backsplash'. Backsplash is enabled by default for spotlights.
 
 ### Stage / Pass Directives
-- **material <image>**: Scanned inside rendering passes. This QFusion-specific keyword is recognized and its image will be used as a fallback to derive average surface colors and light colors if `qer_editorimage` or `makebsp_lightimage` are not specified.
+- **material <image>**: Scanned inside rendering passes. This QFusion-specific keyword is recognized and its image will be used as a fallback to derive average surface colors and light colors if `qer_editorimage` or `q3map_lightimage` are not specified.
 
 ### Surface Parameters (`surfaceparm <parameter>`)
 - **nosolid**: Acts as an alias for `nonsolid`. Clears the solid flag from the surface.
