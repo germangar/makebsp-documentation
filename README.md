@@ -1,6 +1,6 @@
 # Makebsp
 
-Makebsp is a high-performance idTech 3 BSP compiler modernization based on the original id Software `makebsp` source code. This toolchain is designed for cinema-grade lighting, high-precision ray tracing, and deep integration of 3D models as first-class world geometry.
+Makebsp is a high-performance idTech 3 BSP compiler modernization based on the original id Software `q3map` source code. This toolchain is designed for cinema-grade lighting, high-precision ray tracing, and deep integration of 3D models as first-class world geometry.
 
 ## Table of Contents
 - [💡 Key Features](#-key-features)
