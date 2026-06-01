@@ -285,7 +285,7 @@ Used to compile a `.map` file into a `.bsp` file.
 - `-game <G>`: Load a specific game profile (e.g., quake3, qfusion) from `makebsp/<G>.json`.
 - `-samplesize <N>`: Sets the default lightmap sample size (e.g., 4, 8, 16). Lower values = higher resolution.
 - `-enforceSampleSize <0|1>`: If enabled (1), strictly follows the sample size defined in shaders or globally, forcing subdivision if necessary.
-- `-guessuvs`: Automatically calculates optimal UV packing resolution for triangle soup (models) before repacking.
+- `-guessuvs`: [Experimental] Automatically calculates optimal UV packing resolution for triangle soup (models) before repacking.
 - `-rootdir / -basepath / -fs_basepath <P>`: Set the engine root directory path. Can be specified multiple times to build layered search paths.
 - `-userdir / -fs_homepath <P>`: Set the user/home directory path (where the compiled BSP will be written). Can be specified multiple times.
 - `-gamedir / -fs_game <P>`: Set the active mod/game directory name. Can be specified multiple times.
