@@ -237,8 +237,8 @@ List of additions and modifications made to shader parsing and features compared
 - **radius**: Radius of the spotlight cone at the target distance (defaults to 64).
 - **softness**: Spotlight cone softness multiplier (defaults to 1.0).
 - **target**: Target entity name to aim the spotlight at.
-- **dir**: Explicit direction vector (X Y Z) for the spotlight.
-- **angles**: Rotation angles (Pitch Yaw Roll) for the spotlight.
+- **dir**: Explicit direction vector (X Y Z) for the spotlight (when not using a target).
+- **angles**: Rotation angles (Pitch Yaw Roll) for the spotlight (when not using a target).
 - **haloshader**: Specific shader to use for the volumetric halo. Set to "none" or "0" to disable the halo for this light.
 - **haloscale**: Scales the size of the generated halo surface. Defaults to 1.0.
 
