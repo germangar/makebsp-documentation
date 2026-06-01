@@ -310,7 +310,7 @@ Used to compile a `.map` file into a `.bsp` file.
 
 **Other Main Switches**
 These switches change the primary mode of the executable.
-- `-visonly`: [Notice: The standard visibility is already calculate with the bsp. This remains only for special case recalculations] Enables Visibility calculation mode (requires .prt file).
+- `-visonly`: [Notice: The standard visibility is already calculated with the bsp] Standalone Visibility calculation (requires .prt file).
   - `-merge`: Merges adjacent visibility data (can reduce file size).
   - `-nopassage`: Disables the passage-flow visibility optimization.
 - `-exportmodels <bspname>`: Exports all `misc_model` (Triangle Soup) geometry from a BSP into `.obj` files. Models processed with -meta/forcemeta will be split in multple mini-meshes and unusable. Only useful for models originally compiled for vertex lighting.
