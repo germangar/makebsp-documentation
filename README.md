@@ -256,8 +256,7 @@ List of additions and modifications made to shader parsing and features compared
 - **color**: The color of the light.
 - **attenuation**: Distance falloff model. Valid modes are: standard, soft, linear, unreal, smoothstep.
 - **cutoff**: Minimum energy threshold before the light is completely culled. Defaults to the global game minLightAdd value (0.1).
-- **fadeout**: Percentage of the light's reach to use for a softness fade at the cutoff (0.0 to 1.0). Defaults to 0.0 (hard cut).
-- **haloshader**: Specific shader to use for the volumetric halo. Set to "none" or "0" to disable the halo for this light.
+- **fadeout**: Percentage of the light's reach to use for a softness fade (0.0 to 1.0). Defaults to 0.0 (hard cut).
 - **style**: [currently broken] Light style index for dynamic lighting (e.g. flickering, pulsing).
 - **lightimage**: If color is not specified, uses the average color of this shader.
 
