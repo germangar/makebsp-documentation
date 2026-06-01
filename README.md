@@ -212,7 +212,7 @@ List of additions and modifications made to shader parsing and features compared
 - **supersample**: Supersampling radius override for the group's lightmaps.
 - **enforcesamplesize**: Subividide the surfaces if they can't match the samplesize. Integer boolean (1 or 0).
 
-**Terrain** *(This is the original untouched q3map terrain.)*
+**Terrain** *(This is the original untouched and unverified q3map terrain.)*
 - **terrain**: If set to "1", converts the brushes in this group into a blended terrain surface using an alphamap.
 - **shader**: Specifies the base shader to use for terrain generation (required if terrain is "1").
 - **alphamap**: Path to the image file used to blend terrain layers (required if terrain is "1").
