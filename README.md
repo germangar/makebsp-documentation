@@ -164,6 +164,8 @@ List of additions and modifications made to shader parsing and features compared
 - **backsplashspot**: Default entity spotlight backsplash fraction (0.0 to 1.0).
 - **backsplashsurface**: Default surface light backsplash fraction (0.0 to 1.0).
 - **haloshader**: Global default shader to use for light halos. Set to "none" or "0" to disable them.
+- **ambient_testradius**: Radius in world units to test for solid in macro-ambient occlusion (default: 512).
+- **ambient_gatheradius**: Gather radius of light probes for spherical interpolation (default: 256).
 - **_lightingIntensity**: [qfusion engine key] Custom fixed normalization scale for 8-bit LDR lightmap output.Defaults to 3.0
 
 **Lightmaps & Rendering Passes**
@@ -197,6 +199,8 @@ List of additions and modifications made to shader parsing and features compared
 - **lightmapscale**: Entity-level scaling factor for lightmap resolution on the model (clamped between 0.01 and 16.0).
 - **forceuvgen**: Enable (default) or disable to force generating new lightmap UVs from scratch. Disabled uses the model UVs.
 - **collisiontype**: Overrides how the model's collision mesh is generated. Valid working values are: object, wrap, extrude (buggy), none (alias nosolid / nonsolid). More to come.
+- **castshadows**: Enable (1) or disable (0) the entity's geometry from casting shadows into the lightmap. Default 1.
+- **modelgroup**: Links this `misc_model` to a brush model entity (like `func_plat` or `func_door`). When set to the same `modelgroup` name as a parent brush entity, the model's visuals and automatically generated collision hulls are bundled with the brush model and move seamlessly with it.
 
 **Editor keys**
 - **model**: The path to the 3D model file to load.
@@ -213,6 +217,7 @@ List of additions and modifications made to shader parsing and features compared
 - **upscale**: Enable or disable raytracing at 2x lightmap resolution.
 - **supersample**: Supersampling radius override for the group's lightmaps.
 - **enforcesamplesize**: Subividide the surfaces if they can't match the samplesize. Integer boolean (1 or 0).
+- **castshadows**: Enable (1) or disable (0) the entity's brushes from casting shadows into the lightmap. Default 1.
 
 **Terrain** *(This is the original untouched and unverified q3map terrain.)*
 - **terrain**: If set to "1", converts the brushes in this group into a blended terrain surface using an alphamap.
@@ -253,6 +258,7 @@ List of additions and modifications made to shader parsing and features compared
 - **upscale**:  Enable or disable raytracing at 2x lightmap resolution.
 - **supersample**: Supersampling radius override for the entity's lightmaps.
 - **enforcesamplesize**: Subdivide the surfaces if they can't match the samplesize. Integer boolean (1 or 0).
+- **castshadows**: Enable (1) or disable (0) the entity's brushes from casting shadows into the lightmap. Default 1.
 
 ### Entity: light
 
@@ -320,6 +326,7 @@ These switches change the primary mode of the executable.
   - `-merge`: Merges adjacent visibility data (can reduce file size).
   - `-nopassage`: Disables the passage-flow visibility optimization.
 - `-exportmodels <bspname>`: Exports all `misc_model` (Triangle Soup) geometry from a BSP into `.obj` files. Models processed with -meta/forcemeta will be split in multple mini-meshes and unusable. Only useful for models originally compiled for vertex lighting.
+    - `-ignoreplanar 1|0`: When enabled (default 1), skips exporting trisoup surfaces that are perfectly flat/planar (useful to avoid exporting standard wall geometry that was meta'd).
 - `-info <bspname>`: Displays detailed statistics and lump information for the specified BSP file.
 
 ---
@@ -333,9 +340,10 @@ These switches change the primary mode of the executable.
 - `-rad_ao_min / -rad_ao_max`: Define the distance range for the radiosity ambient occlusion effect.
 
 **Ambient lighting**
-- `-mao_samples <N>`: Hemisphere ray count per Light Grid point for macro ambient.
-- `-mao_ambient_samples <N>`: Hemisphere ray count per Lightmap Texel for macro ambient.
-- `-mao_radius <F>`: Maximum ray length for macro-ambient occlusion in world units.
+- `-ambient_grid_samples <N>`: Hemisphere ray count per Light Grid point for macro ambient.
+- `-ambient_samples <N>`: Hemisphere ray count per Lightmap Texel for macro ambient.
+- `-ambient_testradius <F>`: Maximum ray length for macro-ambient occlusion in world units.
+- `-ambient_gatheradius <F>`: Gather radius for spherical interpolation in world units.
 
 **Attenuation (Shading is angle attenuation)**
 - `-shading <type>`: Set the shading model (lambert, halflambert, quadratic, doublequadratic, unreal).
