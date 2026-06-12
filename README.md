@@ -117,7 +117,7 @@ By following this hierarchy, your map source files (`.map`) remain portable and 
 
 ## 🎨 Shader Modifications
 
-List of additions and modifications made to shader parsing and features compared to the original makebsp.
+List of additions and modifications made to shader parsing and features compared to the original q3map.
 
 ### New Shader Directives
 - **q3map_vertexcolor <R G B>**: Overrides the vertex color for the surface.
