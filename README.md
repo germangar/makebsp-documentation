@@ -122,7 +122,7 @@ List of additions and modifications made to shader parsing and features compared
 ### New Shader Directives
 - **q3map_vertexcolor <R G B>**: Overrides the vertex color for the surface.
 - **q3map_surfacelight_glow <value>**: Sets the backface glow fraction for surface lights (enabled by default in CONTENTS_LAVA and CONTENTS_SLIME).
-- **q3map_surfacelight_nodeluxe**: Prevents the surface light from influencing the deluxe map's directionality (it will only contribute color/energy).
+- **q3map_surfacelight_nodeluxe**: Prevents the surface light from influencing the deluxe map's directionality. Instead it will only contribute color/energy (to prevent bumpmap distortions caused by trim lights).
 - **q3map_backsplash_nodeluxe**: Prevents the surface light's backsplash from influencing the deluxe map's directionality.
 - **q3map_lightColor <R G B>**: Alias for `q3map_lightRGB`. Sets the light emission color for the surface.
 
