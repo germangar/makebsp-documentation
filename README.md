@@ -299,6 +299,7 @@ Used to compile a `.map` file into a `.bsp` file.
 *New or relevant to makebsp:*
 - `-game <G>`: Load a specific game profile (e.g., quake3, qfusion) from `makebsp/<G>.json`.
 - `-samplesize <N>`: Sets the default lightmap sample size (e.g., 4, 8, 16). Lower values = higher resolution.
+- `-lightmapimagesize <N>`: Forces a specific lightmap atlas size (e.g., 1024).
 - `-enforceSampleSize <0|1>`: If enabled (1), strictly follows the sample size defined in shaders or globally, forcing subdivision if necessary.
 - `-guessuvs`: [Experimental] Automatically calculates optimal UV packing resolution for triangle soup (models) before repacking.
 - `-rootdir / -basepath / -fs_basepath <P>`: Set the engine root directory path. Can be specified multiple times to build layered search paths.
@@ -372,6 +373,7 @@ These switches change the primary mode of the executable.
 - `-fast`: Drop quality for quick tests.
 - `-lowmem`: Enables memory-mapped file mode to reduce RAM usage on extremely large maps.
 - `-opencl <0|1>`: Enable (1) or disable (0) OpenCL GPU acceleration for supported passes.
+- `-exportlightmaps`: Export a copy of the lightmaps as images for visual inspection.
 - `-debuglightmaps`: Generate BMP files showing lightmap allocation and atlas usage.
 - `-debuglightmapsalpha`: Generate BMP files showing exact lit pixels (highly accurate debug).
 - `-nodirect`: Skip the direct lighting pass.
@@ -380,4 +382,3 @@ These switches change the primary mode of the executable.
 - `-ambientonly`: Only perform the macro-ambient pass. 
 - `-novertex`: Disable vertex lighting generation.
 - `-nogrid`: Disable volumetric light grid generation.
-nogrid`: Disable volumetric light grid generation.
