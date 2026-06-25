@@ -317,7 +317,7 @@ Projects a 2D surface (defined by patches or brushes) onto map geometry. This is
 
 A point entity that projects a 2D quad decal onto map geometry without requiring in-map brush or patch geometry as the projection source. The quad is centered at the entity's origin and faces opposite to the projection direction.
 
-- **Projection Direction**: Determined by the `angles` key, or by targeting another entity (such as a `target_position`) via the `target` key. If neither is specified, it projects in the direction defined by the `angles` key (defaulting to straight down if angles are zero/not set).
+- **Projection Direction**: Determined by the `angles` key, or by targeting another entity (such as a `target_position`) via the `target` key. If neither is specified, it projects in the direction defined by the `angles` key (defaulting to the +X axis, or "East", if angles are zero/not set). To project straight down, set the Pitch to `90`.
 - **Targeting / Groups**: Multiple `misc_decal` entities can safely target the same target entity (e.g. `target_position`) without conflict.
 
 **Keys**
