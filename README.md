@@ -135,6 +135,7 @@ List of additions and modifications made to shader parsing and features compared
 - **q3map_surfacelight_fadeout <value>**: Percentage of the surface light's reach to use for a softness fade at the cutoff (0.0 to 1.0).
 - **q3map_surfacelight_nodeluxe**: Prevents the surface light from influencing the deluxe map's directionality. Instead it will only contribute color/energy (to prevent bumpmap distortions caused by trim lights).
 - **q3map_backsplash_nodeluxe**: Prevents the surface light's backsplash from influencing the deluxe map's directionality.
+- **q3map_deluxe_minangle <value>**: Alias: `q3map_deluxeminangle`. Overrides the minimum incidence angle threshold (in degrees, 0.0 to 89.0) for deluxemap directionality on this material. Useful for softening or clamping deluxemap angles on specific surfaces without changing global defaults.
 - **q3map_lightColor <R G B>**: Alias for `q3map_lightRGB`. Sets the light emission color for the surface.
 - **q3map_maxsamplesize <value>**: Enforces a minimum lightmap resolution (quality floor) by establishing a maximum limit on the surface's `samplesize` value. Ignored during `-fast` compilations.
 - **q3map_minsmooth <value>**: Enforces a minimum lightmap smooth filter radius. It only acts if the global setting has a smaller smooth value than the requested minimum. Can be overridden by an entity's `smooth` key.
@@ -173,6 +174,8 @@ List of additions and modifications made to shader parsing and features compared
 - **shading**: Global light shading mode. Valid modes are: halflambert, lambert, quadratic, doublequadratic, unreal. Default lambert.
 - **attenuation**: Global default distance falloff model for lights. Valid modes are: standard, soft, linear, unreal, smoothstep.
 - **exposurefilter**: Global tonemapping exposure filter. Valid modes are: softknee, reinhard, filmic, linear (or off). Default reinhard.
+- **saturation**: Global lightmap saturation multiplier (1.0 = normal, 1.5 = +50%, 0.0 = greyscale).
+- **saturationramp**: Saturation contrast curve (prevents clipping in highlights/shadows). Valid modes are: filmic, power, halfpower, midtone, off.
 - **cutoff**: Minimum energy threshold before any light is completely culled. Defaults to the global game.json minLightAdd value.
 - **fadeout**: Percentage of a light's reach to use for a softness fade (0.0 to 1.0). Defaults to 0.0 (hard cut).
 - **backsplashspot**: Default entity spotlight backsplash fraction (0.0 to 1.0).
@@ -185,7 +188,7 @@ List of additions and modifications made to shader parsing and features compared
 **Lightmaps & Rendering Passes**
 - **samplesize**: Global default lightmap sample size in game units (e.g., 16). Default depends on game profile (4 or 8).
 - **deluxe**: Enable (1) or disable (0) deluxe mapping globally (direction maps). Default depends on game profile (1 or 0).
-- **deluxe_minangle**: Minimum angle (in degrees) to blend deluxemaps (0 to 90). Higher value = softer bumpmapping. Default depends on game profile (15.0 or 40.0).
+- **deluxe_minangle**: Minimum angle (in degrees) to blend deluxemaps (0 to 90). Higher value = softer bumpmapping. Default depends on game profile (15.0 or 40.0). Can be overridden per-material using `q3map_deluxe_minangle`.
 - **supersample**: Global supersampling trace radius (e.g., 0.5 or 2.0). Defaults to 0 (disabled). Exceeding 8.0 is not recommended.
 - **smooth**: Global lightmap smooth filter radius. Defaults to 0.35. Set to 0.0 to disable global smoothing.
 - **smoothpasses**: Number of smoothing passes applied to the lightmaps. Defaults to 4.
@@ -327,6 +330,7 @@ A point entity that projects a 2D quad decal onto map geometry without requiring
 - **scale**: A multiplier applied to the final width and height of the decal. Useful for scaling decals proportionally without calculating the absolute dimensions. Default: `1.0`.
 - **distance** / **depth**: The projection depth/distance in game units. Default: `64`.
 - **angles**: Rotation angles (Pitch Yaw Roll) that define the projection direction if no `target` is set.
+- **rotate**: An angle (in degrees) to rotate the projected decal clockwise around the projection axis. Particularly useful for spinning the decal when pointing at a target entity.
 - **target**: Target entity name used to determine the projection direction. If specified, the projection vector points from the `misc_decal` towards the target entity.
 - **decalgroup**: If specified, this decal will *only* project onto brushes, patches, and models that share the exact same `decalgroup` key.
 - **vertexcolor**: If specified, overwrites the vertex lighting of the generated decal geometry with a flat custom color (format: `R G B` or hex `#RRGGBB`).
@@ -401,12 +405,14 @@ These switches change the primary mode of the executable.
 
 **Deluxe Mapping (Directional Lightmaps)**
 - `-deluxe <0|1>`: Enable (1) or disable (0) deluxemapping (direction maps).
-- `-deluxe_minangle <A>`: Clamp the minimum incidence angle for deluxe vectors (the higher the value the less 'bumpmapped').
+- `-deluxe_minangle <A>`: Clamp the minimum incidence angle for deluxe vectors (the higher the value the less 'bumpmapped'). Can be overridden per-material using `q3map_deluxe_minangle`.
 - `-deluxe_radiosity_exaggerate <F>`: Exaggerate the incidence angle for bounced light. (may produce glitches on specular surfaces)
 - `-deluxe_ambient_exaggerate <F>`: Exaggerate the incidence angle for ambient light. (Its impact is very low no matter how big it is)
 
 **Post-Processing & Filtering**
 - `-exposurefilter <type>`: Highlight compression filter (softknee, reinhard, filmic). To reduce hotspots.
+- `-saturation <F>`: Global lightmap saturation multiplier (1.0 = normal, 1.5 = +50%, 0.0 = greyscale).
+- `-saturationramp <type>`: Saturation contrast curve (prevents clipping). Valid modes: filmic, power, halfpower, midtone, off.
 - `-antialiasing <N>`: Number of post-process anti-aliasing passes (The smooth filter is better, IMO).
 - `-smoothpasses <N>`: Number of lightmap smoothing/blurring passes.
 - `-smooth <R>`: Radius for smoothing and jittered supersampling.
