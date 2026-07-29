@@ -481,3 +481,6 @@ These switches change the primary mode of the executable.
 - `-ambientonly`: Only perform the macro-ambient pass. 
 - `-novertex`: Disable vertex lighting generation.
 - `-nogrid`: Disable volumetric light grid generation.
+
+
+<img width="2560" height="1440" alt="wf_260728_010238" src="https://github.com/user-attachments/assets/a8f2b2b5-b71b-4f15-81a3-fd5c49a3a6aa" />
