@@ -137,7 +137,7 @@ By following this hierarchy, your map source files (`.map`) remain portable and 
 
 ---
 
-## ⚙️ Game Profiles (`makebspdata/`)
+## ⚙️ Game Profiles (makebspdata)
 
 The compiler uses a flexible, data-driven profile system powered by `.json` files located in the `makebspdata/` directory. By default, the compiler provides two core profiles: `qfusion.json` and `quake3.json`. 
 
