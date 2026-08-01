@@ -144,7 +144,7 @@ The compiler uses a flexible, data-driven profile system powered by `.json` file
 You can load a specific game profile at compile time using the `-game <name>` CLI argument.
 
 ### 1. Atomic Overrides (Sparse Loading)
-The game profile parser is designed around **atomic loading**. When a `.json` profile is loaded, the compiler establishes the default Quake 3/QFusion settings in memory as a baseline. 
+The game profile parser is designed around **atomic loading**. When a `.json` profile is loaded, the compiler establishes the default QFusion settings in memory as a baseline. 
 
 If your `.json` file only contains a few keys (e.g., just `"flareShader": "my_flare"`), the compiler will safely load your specific overrides while keeping all other default settings intact. A game profile does not need to list every single property to be valid.
 
