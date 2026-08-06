@@ -2,6 +2,9 @@
 
 Makebsp is a high-performance idTech 3 BSP compiler modernization based on the original id Software `q3map` source code.
 
+
+
+
 ## Table of Contents
 - [💡 Key Features](#-key-features)
     - [1. High-Performance Ray Tracing (Intel Embree)](#1-high-performance-ray-tracing-intel-embree)
@@ -224,9 +227,8 @@ List of additions and modifications made to shader parsing and features compared
 
 **Lighting / Global Ambiance**
 - **ambient**: Global uniform ambient light intensity. Default 0.
-- **color**: Sets the color for both ambient_sky and ambient_ground if not present. Default 1 1 1.
-- **ambient_sky**: The RGB color vector for the sky ambient light. Used for surfaces facing upwards.
-- **ambient_ground**: The RGB color vector for the ground ambient light. Used for surfaces facing downwards.
+- **color**: Sets the global ambient color. Default 1 1 1.
+- **ambient_sky**: The RGB color vector for the sky ambient light. Used for surfaces facing upwards, overriding the global color.
 - **shading**: Global light shading mode. Valid modes are: halflambert, lambert, quadratic, doublequadratic, unreal. Default lambert.
 - **attenuation**: Global default distance falloff model for lights. Valid modes are: standard, soft, linear, unreal, smoothstep.
 - **exposurefilter**: Global tonemapping exposure filter. Valid modes are: softknee, reinhard, filmic, linear (or off). Default reinhard.
@@ -524,5 +526,6 @@ These switches change the primary mode of the executable.
 - `-novertex`: Disable vertex lighting generation.
 - `-nogrid`: Disable volumetric light grid generation.
 
+<img width="2560" height="1440" alt="wf_260805_050645" src="https://github.com/user-attachments/assets/f4ef6a3d-4ed3-4c72-8dbe-f1ae0149c4dc" />
 
 <img width="2560" height="1440" alt="wf_260728_010238" src="https://github.com/user-attachments/assets/a8f2b2b5-b71b-4f15-81a3-fd5c49a3a6aa" />
