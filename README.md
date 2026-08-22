@@ -33,6 +33,34 @@ Makebsp is a high-performance idTech 3 BSP compiler modernization based on the o
 
 ---
 
+> [!TIP]
+> ### 🚀 Quick start: Typical Compilation Lines
+> 
+> `makebsp` and `makelight` are called separately. The first is responsible for BSP geometry and VIS portal generation (doing both by default), and the second is in charge of the lighting. Because they handle these tasks automatically, you do not need to pass legacy switches like `-bsp`, `-vis`, or `-light`.
+> 
+> Here are the most common build setups:
+> 
+> **FAST (For quick Work-In-Progress compilations)**:
+> ```bash
+> makebsp.exe -game <gamename> -leaktest -fast -samplesize 8 <mapname>
+> makelight.exe -game <gamename> -fast <mapname>
+> ```
+> * **What `-fast` does in `makebsp`**: It ignores requests for high-resolution lightmaps (overriding `q3map_maxsamplesize`) and completely disables edge chamfering to prioritize raw compilation speed.
+> * **What `-fast` does in `makelight`**: It enables an optimized, rasterized voxelization mode with CSR filters, and forces a simplified, faster uniform path for radiosity calculations (skipping high-quality trisoup radiosity).
+> 
+> **DEFAULT (For standard, good quality compilations)**:
+> ```bash
+> makebsp.exe -game <gamename> <mapname>
+> makelight.exe -game <gamename> <mapname>
+> ```
+> 
+> **RELEASE (For the highest quality final releases)**:
+> ```bash
+> makebsp.exe -game <gamename> <mapname>
+> makelight.exe -game <gamename> -upscale <mapname>
+> ```
+
+---
 ## 💡 Key Features
 
 ### 1. High-Performance Ray Tracing (Intel Embree)
@@ -556,6 +584,7 @@ These switches change the primary mode of the executable.
 - `-grid_smoothdirect_passes <N>`: Number of iterative smoothing passes to apply to the directional light grid.
 - `-grid_minambient <F>`: Minimum hard light floor applied to the ambient light grid.
 - `-grid_maxambient <F>`: Hard clamp applied to the maximum ambient light the grid can accumulate.
+
 
 
 
