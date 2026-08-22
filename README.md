@@ -2,9 +2,6 @@
 
 Makebsp is a high-performance idTech 3 BSP compiler modernization based on the original id Software `q3map` source code.
 
-
-
-
 ## Table of Contents
 - [💡 Key Features](#-key-features)
     - [1. High-Performance Ray Tracing (Intel Embree)](#1-high-performance-ray-tracing-intel-embree)
@@ -26,6 +23,8 @@ Makebsp is a high-performance idTech 3 BSP compiler modernization based on the o
     - [worldspawn](#entity-worldspawn)
     - [misc_model](#entity-misc_model)
     - [func_group](#entity-func_group)
+    - [func_trisoup](#entity-func_trisoup)
+    - [func_trim](#entity-func_trim)
     - [func_light](#entity-func_light)
     - [light](#entity-light)
     - [_decal](#entity-_decal)
@@ -98,6 +97,7 @@ Mappers can now tint and recolor materials directly within the map editor withou
 Post-process lightmap filtering has been rebuilt for maximum quality and seamlessness across geometry charts.
 - **Stitch Filtering:** The toolchain automatically identifies adjacent surfaces sharing world-space edges (partners) and performs cross-surface bilinear sampling to eliminate visible seams.
 - **Volumetric Filtering:** Specialized world-space filtering for complex "triangle soup" (models) ensures smooth lighting gradients even on meshes with disconnected UV islands.
+- **Kitbashing (Smooth Groups):** Mappers can group disjoint or intersecting `misc_model` entities using the `smoothgroup` key, blending their volumetric lightmaps as if they were a single continuous mesh.
 - **Per-Surface Customization:** Mappers can override the global smoothing settings on a per-entity basis using the `smooth` key, allowing for sharper shadows on some objects and softer, more diffuse lighting on others.
 - **GPU Acceleration:** All filtering and anti-aliasing passes are fully GPU-accelerated via OpenCL, allowing for high-quality multi-pass smoothing without significant compile-time penalties.
 
@@ -241,6 +241,14 @@ List of additions and modifications made to shader parsing and features compared
 - **haloshader**: Global default shader to use for light halos. Set to "none" or "0" to disable them.
 - **ambient_testradius**: Radius in world units to test for solid in macro-ambient occlusion (default: 512).
 - **ambient_gatheradius**: Gather radius of light probes for spherical interpolation (default: 256).
+- **grid_ambientbias**: Non-linear gamma bias applied to the ambient component of the light grid. Default 1.5.
+- **grid_directbias**: Non-linear gamma bias applied per-light to the directional component of the light grid. Default 1.5.
+- **grid_smoothambient**: Radius in world units for smoothing the ambient component of the light grid. Set to 0 to disable. Default 256.0.
+- **grid_smoothambient_passes**: Number of iterative smoothing passes to apply to the ambient light grid. Default 4.
+- **grid_smoothdirect**: Radius in world units for smoothing the directional component of the light grid. Default 128.0 (qfusion only) or 0.0 (disabled).
+- **grid_smoothdirect_passes**: Number of iterative smoothing passes to apply to the directional light grid. Default 3.
+- **grid_minambient**: Minimum hard light floor applied to the ambient light grid (in 8-bit scale). Set to 0 to disable.
+- **grid_maxambient**: Hard clamp applied to the maximum ambient light the grid can accumulate, preserving color luminance. Set to 0 to disable.
 - **_lightingIntensity**: [qfusion engine key] Custom fixed normalization scale for 8-bit LDR lightmap output.Defaults to 3.0
 
 **Lightmaps & Rendering Passes**
@@ -270,6 +278,7 @@ List of additions and modifications made to shader parsing and features compared
 
 **User keys**
 - **smooth**: lightmap smooth filter radius to use on this model.
+- **smoothgroup**: Groups disjoint or intersecting models together. Models sharing the same `smoothgroup` name will share their volumetric lightmap smoothing passes, eliminating lighting seams between kitbashed pieces.
 - **vertexcolor**: Overrides the vertex color for all surfaces of this model instance.
 - **upscale**: Enable or disable raytracing at 2x lightmap resolution.
 - **supersample**: Supersampling radius override for the model's lightmaps.
@@ -317,6 +326,7 @@ Converts standard map brushes into a continuous, smoothed triangle soup (mesh). 
 
 **Brushes**
 - **smooth**: Lightmap smooth filter radius to use on this entity's surfaces.
+- **smoothgroup**: Shares volumetric lightmap smoothing passes with other entities using the same group name.
 - **vertexcolor**: Overrides the vertex color for all surfaces of this group.
 - **upscale**:  Enable or disable raytracing at 2x lightmap resolution.
 - **supersample**: Supersampling radius override for the entity's lightmaps.
@@ -326,6 +336,13 @@ Converts standard map brushes into a continuous, smoothed triangle soup (mesh). 
 - **chamfer_convexwidth**: To do (Currently inactive because brushes are converted to a trisoup prior to the chamfering pass).
 - **chamfer_concavewidth**: To do (Currently inactive because brushes are converted to a trisoup prior to the chamfering pass).
 
+### Entity: func_trim
+
+An iterative plane-trimming CSG operator for `misc_model` entities. It uses the drawable planes of its brushes to slice and trim away portions of any intersecting `misc_model` (turning standard brushes into an invisible cutting tool). The entity and its brushes are completely suppressed from the final BSP.
+
+**Targeting**
+- **target**: If specified, the `func_trim` will only cut `misc_model` entities that have a matching `targetname`. If left blank, it acts globally and cuts any intersecting `misc_model`.
+
 ### Entity: func_light
 
 **Light set up**
@@ -334,6 +351,8 @@ Converts standard map brushes into a continuous, smoothed triangle soup (mesh). 
 - **light**: The emission strength or intensity of the light.
 - **color**: The color of the light. If not specified, it will attempt to derive it from the surface texture (lightimage).
 - **backsplash**: Backsplash percentage for surface lights and spotlights (how much light bounces back). Default: surface 0.0/spot 0.1.
+- **grid_ambientscale**: Multiplier for this light's contribution to the volumetric ambient light grid. Default 1.0. Set to 0 to skip grid ambient contribution.
+- **grid_directscale**: Multiplier for this light's contribution to the volumetric direct light grid. Default 1.0. Set to 0 to skip grid direct contribution.
 - **nodeluxe**: If set to 1, the light will not influence the deluxe map's directionality.
 - **backsplash_nodeluxe**: If set to 1, the backsplash generated by this light will not influence the deluxe map's directionality.
 - **attenuation**: Distance falloff model. Valid modes are: standard, soft, linear, unreal, smoothstep.
@@ -371,6 +390,8 @@ Converts standard map brushes into a continuous, smoothed triangle soup (mesh). 
 **Light set up**
 - **light**: The emission strength or intensity of the light.
 - **color**: The color of the light.
+- **grid_ambientscale**: Multiplier for this light's contribution to the volumetric ambient light grid. Default 1.0. Set to 0 to skip grid ambient contribution.
+- **grid_directscale**: Multiplier for this light's contribution to the volumetric direct light grid. Default 1.0. Set to 0 to skip grid direct contribution.
 - **nodeluxe**: If set to 1, the light will not influence the deluxe map's directionality.
 - **backsplash_nodeluxe**: If set to 1, the backsplash generated by this light will not influence the deluxe map's directionality.
 - **attenuation**: Distance falloff model. Valid modes are: standard, soft, linear, unreal, smoothstep.
@@ -525,6 +546,19 @@ These switches change the primary mode of the executable.
 - `-ambientonly`: Only perform the macro-ambient pass. 
 - `-novertex`: Disable vertex lighting generation.
 - `-nogrid`: Disable volumetric light grid generation.
+
+**Light Grid (Volumetric Lighting)**
+- `-grid_ambientbias <F>`: Non-linear gamma bias applied to the ambient component of the light grid.
+- `-grid_directbias <F>`: Non-linear gamma bias applied per-light to the directional component of the light grid.
+- `-grid_smoothambient <F>`: Radius in world units for smoothing the ambient component of the light grid.
+- `-grid_smoothambient_passes <N>`: Number of iterative smoothing passes to apply to the ambient light grid.
+- `-grid_smoothdirect <F>`: Radius in world units for smoothing the directional component of the light grid.
+- `-grid_smoothdirect_passes <N>`: Number of iterative smoothing passes to apply to the directional light grid.
+- `-grid_minambient <F>`: Minimum hard light floor applied to the ambient light grid.
+- `-grid_maxambient <F>`: Hard clamp applied to the maximum ambient light the grid can accumulate.
+
+
+
 
 <img width="2560" height="1440" alt="wf_260805_050645" src="https://github.com/user-attachments/assets/f4ef6a3d-4ed3-4c72-8dbe-f1ae0149c4dc" />
 
